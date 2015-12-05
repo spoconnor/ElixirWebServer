@@ -1,0 +1,196 @@
+{"frames": [
+  {
+    "filename": "grass_slope_n.png",
+    "frame": {"x":0,"y":192,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "grass_slope_ne.png",
+    "frame": {"x":64,"y":192,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "grass_slope_nw.png",
+    "frame": {"x":128,"y":192,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "grass_slope_e.png",
+    "frame": {"x":192,"y":192,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "grass_block.png",
+    "frame": {"x":256,"y":192,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "grass_slope_w.png",
+    "frame": {"x":320,"y":192,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "grass_slope_se.png",
+    "frame": {"x":384,"y":192,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "grass_slope_sw.png",
+    "frame": {"x":448,"y":192,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "grass_slope_s.png",
+    "frame": {"x":512,"y":192,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "grass_slope_wse.png",
+    "frame": {"x":0,"y":256,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "grass_slope_nws.png",
+    "frame": {"x":64,"y":256,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "grass_slope_wne.png",
+    "frame": {"x":128,"y":256,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "grass_slope_nes.png",
+    "frame": {"x":192,"y":256,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "rock_outcrop_.png",
+    "frame": {"x":0,"y":256,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "rock_slope_n.png",
+    "frame": {"x":64,"y":256,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "rock_slope_nw.png",
+    "frame": {"x":128,"y":256,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "rock_slope_e.png",
+    "frame": {"x":192,"y":256,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "rock_block_1.png",
+    "frame": {"x":256,"y":256,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "rock_block_2.png",
+    "frame": {"x":320,"y":256,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "rock_slope_w.png",
+    "frame": {"x":384,"y":256,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "rock_slope_se.png",
+    "frame": {"x":448,"y":256,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "rock_slope_sw.png",
+    "frame": {"x":512,"y":256,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  },
+  {
+    "filename": "rock_slope_s.png",
+    "frame": {"x":576,"y":256,"w":64,"h":64},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+    "sourceSize": {"w":64,"h":64}
+  }
+],
+  "meta": {
+    "app": "http://www.texturepacker.com",
+    "version": "1.0",
+    "image": "iso-64x64-outside.png",
+    "format": "RGBA8888",
+    "size": {"w":1024,"h":319},
+    "scale": "1",
+    "smartupdate": "$TexturePacker:SmartUpdate:17590581092f2081f084c22bf7b2e6b2$"
+  }
+}
