@@ -1,4 +1,4 @@
-FROM trenpixster/elixir
+FROM trenpixster/elixir:1.1.1
 MAINTAINER Sean OConnor <onewheel@gmail.com>
 
 ############

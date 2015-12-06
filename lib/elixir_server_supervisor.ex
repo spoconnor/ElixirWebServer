@@ -10,7 +10,7 @@ end
 @riakworker Riak
 @webworker WebserverWorker
 @es_websock WebsocketWorker
-@q_consumer WebsocketQConsumer
+#@q_consumer WebsocketQConsumer
 @users WebsocketUsers
 @worldserverclient WorldServerClient
 @worldserverlistener WorldServerListener
@@ -23,7 +23,7 @@ def init(:ok) do
       #worker(RiakClient, [[name: @riakworker]]),
       worker(WebserverWorker, [[name: @webworker]]),
       worker(WebsocketEsWebsock, [[name: @es_websock]]), 
-      worker(WebsocketQConsumer, [[name: @q_consumer]]), 
+      #worker(WebsocketQConsumer, [[name: @q_consumer]]), 
       worker(WebsocketUsers, [[name: @users]]), 
       #worker(WorldServerClient, [{127,0,0,1}, 8842, [mode: :binary], 3000, [name: @worldserverclient]]),
       worker(WorldServerListener, [[name: @worldserverlistener]]),

@@ -82,7 +82,7 @@ def handle_call(:debug, _from, state) do
   {:reply,:ok,state}
 end
 def handle_call(:resetState, _from, _state) do
-  {:reply,:ok,%State{}}
+  {:reply,:ok,%WebsocketState{}}
 end
 def handle_call(:die, _from, state) do
   {:stop, :normal, state}
