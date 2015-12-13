@@ -17,6 +17,6 @@ MAINTAINER Sean OConnor <onewheel@gmail.com>
 # && tar -xvzf ElixirServer.1.0.tgz -C /opt \
 # && rm ElixirServer.1.0.tgz
 
-EXPOSE 80
+EXPOSE 8080-8083
 
 CMD ["/usr/bin/iex"]
