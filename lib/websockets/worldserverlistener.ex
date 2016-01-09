@@ -9,7 +9,7 @@ defmodule WorldServerListener do
     Lib.trace("Starting WorldServerListener")
     :erlang.process_flag(:trap_exit, :true)
     port = 8083
-    {:ok, sock} = :gen_tcp.listen(port, [:binary, {:packet, 0}, {:active, :true}, {:reuseaddr, :true}, {:packet_size,1024*2}, {:keepalive,:true}])
+    {:ok, sock} = :gen_tcp.listen(port, [:binary, {:active, :true}, {:reuseaddr, :true}, {:packet,0}, {:packet_size,1024*10}, {:recbuf,1024*10}, {:keepalive,:true}])
     Lib.trace("WorldServerListener Accepting connections on port #{port}")
     spawn(fn() -> accept_connections(sock) end)
     {:ok, sock}
@@ -39,8 +39,9 @@ defmodule WorldServerListener do
     Lib.trace("WorldServerListener waiting for data")
     receive do
       {_tcp,_,bin} ->
-        Lib.trace("Recv from WorldServer:",bin)
-        Lib.trace("type:", Packet.msgType(bin))
+        Lib.trace("Recv from WorldServer:")
+        Lib.trace(bin)
+        Lib.trace("Recv from WorldServer:", Packet.msgType(bin))
         msg = Packet.decode(bin)
         WebsocketUsers.notify(WebsocketUsers, bin)
         recv_connection(client)

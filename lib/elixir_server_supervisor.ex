@@ -12,7 +12,7 @@ end
 @es_websock WebsocketWorker
 #@q_consumer WebsocketQConsumer
 @users WebsocketUsers
-@worldserverclient WorldServerClient
+@worldserverclient WorldServerClientWorker
 @worldserverlistener WorldServerListener
 
 # behaviour callbacks
@@ -26,6 +26,7 @@ def init(:ok) do
       #worker(WebsocketQConsumer, [[name: @q_consumer]]), 
       worker(WebsocketUsers, [[name: @users]]), 
       #worker(WorldServerClient, [{127,0,0,1}, 8842, [mode: :binary], 3000, [name: @worldserverclient]]),
+      #worker(WorldServerClient, ['worldserver', 8084, [mode: :binary], 3000, [name: @worldserverclient]]),
       worker(WorldServerListener, [[name: @worldserverlistener]]),
 
       #, [restart: :permanent, shutdown: 1000])

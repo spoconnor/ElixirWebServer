@@ -62,7 +62,12 @@ def encodeStream(msg) do
   #masks = [:random.uniform(255), :random.uniform(255),
   #         :random.uniform(255), :random.uniform(255)]
   #[129, Enum.count(msg) ||| 128] ++ masks
-  [130, Enum.count(msg)] ++ msg
+  <<a,b>> = <<Enum.count(msg)::size(16)>> # 16 bit max message length
+  if a == 0 do
+    [130, b] ++ msg
+  else
+    [130, 126, a, b] ++ msg
+  end
 end
 #def encodeBytes([],encoded) do
 #  encoded

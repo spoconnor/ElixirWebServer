@@ -8,6 +8,7 @@ defmodule Packet do
 
   def msgType(<<dataSize::8,data::binary>>) do
     msgData = :binary.part(data,0,dataSize)
+    Lib.trace("msgData:", msgData)
     message = CommsMessages.Message.decode(<<msgData::binary>>)
     case message.msgtype do
       1 -> "Response"

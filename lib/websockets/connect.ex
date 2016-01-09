@@ -126,10 +126,11 @@ def client(state) do
 
       # Send message thru Tcp connection to server
 
-      #{:ok, pid} = WorldServerClient.start_link({127,0,0,1}, 8084, [mode: :binary], 3000)
       {:ok, pid} = WorldServerClient.start_link('worldserver', 8084, [mode: :binary], 3000)
-      WorldServerClient.send(pid, str)
+      WorldServerClient.send(WorldServerClientWorker, pid, str)
       {:ok, resp} = WorldServerClient.recv(pid, 0)
+      #WorldServerClient.send(WorldServerClientWorker, str)
+      #{:ok, resp} = WorldServerClient.recv(WorldServerClientWorker, 0)
       Lib.trace("WorldServer returned:", resp)
       Lib.trace("type:", Packet.msgType(resp))
 
