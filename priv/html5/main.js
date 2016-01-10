@@ -55,12 +55,14 @@ function connect() {
               console.log("Received ArrayBuffer data from the server")
               var array = new Uint8Array(msg.data)
               var protoMsgLen = array[0];
-              //var protoMsg = msg.data.slice(1);  // TODO - change this once length added to full message
+              var data = array.slice(protoMsgLen+1);
               var message = CommsMessages.Message.decodeDelimited(msg.data);
               console.log('Received msgtype: '+message.msgtype);
-              if (message.msgtype == 4) {
+              if (message.msgtype == 1) {
                 processResponse(message)
-              }
+              } else if (message.msgtype == 9) {
+                processMap(message, data)
+              }        
             }
         }
 
@@ -95,10 +97,54 @@ function login(socket) {
     }
 }
 
+    var sprites = [
+      "null", // 0
+      "grass_slope_n.png",  // 1
+      "grass_slope_ne.png", // 2
+      "grass_slope_nw.png", // 3
+      "grass_slope_e.png",  // 4
+      "grass_block.png",    // 5
+      "grass_slope_w.png",  // 6
+      "grass_slope_se.png", // 7
+      "grass_slope_sw.png", // 8
+      "grass_slope_s.png",  // 9
+      "grass_slope_wse.png",// 10
+      "grass_slope_nws.png",// 11
+      "grass_slope_wne.png",// 12
+      "grass_slope_nes.png",// 13
+      "rock_outcrop_.png",  // 14
+      "rock_slope_n.png",   // 15
+      "rock_slope_nw.png",  // 16
+      "rock_slope_e.png",   // 17
+      "rock_block_1.png",   // 18
+      "rock_block_2.png",   // 19
+      "rock_slope_w.png",   // 20
+      "rock_slope_se.png",  // 21
+      "rock_slope_sw.png",  // 22
+      "rock_slope_s.png",   // 23
+    ]
+
 function processResponse(msg) {
     if (msg.response.code == 1) {
         clientId = msg.dest
         console.log('Logged in, clientId = '+clientId)
+    }
+}
+function processMap(msg, data) {
+    console.log('Map message recevied')
+    var idx=0
+    for (var x=0; x<10; x++){
+        for (var y=0; y<10; y++){
+            var colMin=data[idx++]
+            var colMax=data[idx++]
+            for (var z=colMin; z<=colMax; z++){
+                var spr=sprites[data[idx++]]
+                var block = game.add.sprite(400+(x-y)*32,256+(x+y)*16-z*21, 'iso-outside');
+                //console.log('frameName: ' + x + ',' + y + '=' + mapsprites[y*10+x] + '=>' + sprites[mapsprites[y*10+x]])
+                block.frameName = spr
+                block.anchor.setTo(0.5, 0.5);
+            }
+        }
     }
 }
 
@@ -157,7 +203,7 @@ function create() {
     setTimeout(function () {
       say("Hello World!");
       getMap(1,1);
-    }, 5000);
+    }, 20000);
 
     game.stage.backgroundColor = '#404040';
 
@@ -187,43 +233,16 @@ function create() {
       1,1,1,1,1,1,1,1,1,1,
     ];
 
-    var sprites = [
-      "null", // 0
-      "grass_slope_n.png",  // 1
-      "grass_slope_ne.png", // 2
-      "grass_slope_nw.png", // 3
-      "grass_slope_e.png",  // 4
-      "grass_block.png",    // 5
-      "grass_slope_w.png",  // 6
-      "grass_slope_se.png", // 7
-      "grass_slope_sw.png", // 8
-      "grass_slope_s.png",  // 9
-      "grass_slope_wse.png",// 10
-      "grass_slope_nws.png",// 11
-      "grass_slope_wne.png",// 12
-      "grass_slope_nes.png",// 13
-      "rock_outcrop_.png",  // 14
-      "rock_slope_n.png",   // 15
-      "rock_slope_nw.png",  // 16
-      "rock_slope_e.png",   // 17
-      "rock_block_1.png",   // 18
-      "rock_block_2.png",   // 19
-      "rock_slope_w.png",   // 20
-      "rock_slope_se.png",  // 21
-      "rock_slope_sw.png",  // 22
-      "rock_slope_s.png",   // 23
-    ]
-
-    for (var x=0; x<10; x++){
-        for (var y=0; y<10; y++){
-            for (var z=1; z<=mapdata[y*10+x]; z++){
-                var block = game.add.sprite(400+(x-y)*32,128+(x+y)*16-z*21, 'iso-outside');
-                //console.log('frameName: ' + x + ',' + y + '=' + mapsprites[y*10+x] + '=>' + sprites[mapsprites[y*10+x]])
-                block.frameName = sprites[mapsprites[y*10+x]]
-                block.anchor.setTo(0.5, 0.5);
-            }
-        }
-    }
+//    for (var x=0; x<10; x++){
+//        for (var y=0; y<10; y++){
+//            for (var z=1; z<=mapdata[y*10+x]; z++){
+//                var block = game.add.sprite(400+(x-y)*32,128+(x+y)*16-z*21, 'iso-outside');
+//                //console.log('frameName: ' + x + ',' + y + '=' + mapsprites[y*10+x] + '=>' + sprites[mapsprites[y*10+x]])
+//                block.frameName = sprites[mapsprites[y*10+x]]
+//                block.anchor.setTo(0.5, 0.5);
+//            }
+//        }
+//    }
     //chick = game.add.sprite(64, 64, 'atlas');
 
     //  You can set the frame based on the frame name (which TexturePacker usually sets to be the filename of the image itself)
