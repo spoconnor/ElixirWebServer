@@ -1,13 +1,107 @@
 window.onload = function() {
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'Html5Client', { preload: preload, create: create });
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'Html5Client', 
+    { preload: preload, create: create, update: update, render: render });
+
+function preload() {
+    try {
+      console.log('Loading textures');
+      //  We load a TexturePacker JSON file and image and show you how to make several unique sprites from the same file
+      game.load.atlas('iso-outside', 'resources/iso-64x64-outside.png', 'resources/iso-64x64-outside.json');
+      game.load.spritesheet('button', 'resources/button_sprite_sheet.png', 193, 71);
+      //game.load.image('block', 'resources/block.png');
+    } catch(exception) {
+      console.log('Error:' + exception);
+    }
+};
 
 var ProtoBuf = dcodeIO.ProtoBuf;
-var builder = ProtoBuf.loadProtoFile("CommsMessages.proto")
-var CommsMessages = builder.build("CommsMessages")
+var builder = ProtoBuf.loadProtoFile("CommsMessages.proto");
+var CommsMessages = builder.build("CommsMessages");
 var clientId = 0;
 var webServerId = 1000;
 var socket;
+
+var text;
+var button;
+var x = 32;
+var y = 80;
+var cursors;
+var fireButton;
+
+
+
+function create() {
+
+    //  Modify the world and camera bounds
+    // game.world.setBounds(-2000, -2000, 4000, 4000);
+    game.world.resize(3000, 600);
+    
+    game.stage.backgroundColor = '#404040';
+
+    cursors = game.input.keyboard.createCursorKeys();
+    fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    
+    //	Just to kick things off
+    button = game.add.button(100, 100, 'button', start, this, 2, 1, 0);
+
+    //	Progress report
+    text = game.add.text(32, 128, 'Click to login', { fill: '#ffffff' });
+};
+
+
+function start() {
+    //  We load a TexturePacker JSON file and image and show you how to make several unique sprites from the same file
+    //game.load.image('picture1', 'assets/pics/mighty_no_09_cover_art_by_robduenas.jpg');
+    
+    connect();
+
+    // TODO - wait for open state, then send these
+    setTimeout(function () {
+      say("Hello World!");
+      getMap(1,1);
+    }, 20000);
+    
+    button.visible = false;
+};
+
+function update() {
+    //  Scroll the background
+    //starfield.tilePosition.y += 2;
+
+    if (cursors.up.isDown)
+    {
+         game.camera.y -= 4;
+    }
+    else if (cursors.down.isDown)
+    {
+        game.camera.y += 4;
+    }
+
+    if (cursors.left.isDown)
+    {
+        game.camera.x -= 4;
+    }
+    else if (cursors.right.isDown)
+    {
+        game.camera.x += 4;
+    }
+
+        //  Run collision
+    //    game.physics.arcade.overlap(bullets, aliens, collisionHandler, null, this);
+    //    game.physics.arcade.overlap(enemyBullets, player, enemyHitsPlayer, null, this);
+}
+
+function render() {
+    
+    game.debug.cameraInfo(game.camera, 32, 32);
+    
+    // for (var i = 0; i < aliens.length; i++)
+    // {
+    //     game.debug.body(aliens.children[i]);
+    // }
+
+}
 
 //var socket = new WebSocket("ws://localhost:8000/socket/server/startDaemon.php");
 //
@@ -44,31 +138,31 @@ function connect() {
         socket.onopen = function() {
             console.log('Socket Status: '+socket.readyState+' (open)');
             login(socket);
-        }
+        };
 
         socket.onmessage = function(msg) {
             if (typeof msg.data === "string"){
               console.log("Received Text data from the server: " + msg.data);
             } else if (msg.data instanceof Blob){
-              console.log("Received Blob data from the server")
+              console.log("Received Blob data from the server");
             } else if (msg.data instanceof ArrayBuffer){
-              console.log("Received ArrayBuffer data from the server")
-              var array = new Uint8Array(msg.data)
+              console.log("Received ArrayBuffer data from the server");
+              var array = new Uint8Array(msg.data);
               var protoMsgLen = array[0];
               var data = array.slice(protoMsgLen+1);
               var message = CommsMessages.Message.decodeDelimited(msg.data);
               console.log('Received msgtype: '+message.msgtype);
-              if (message.msgtype == 1) {
-                processResponse(message)
-              } else if (message.msgtype == 9) {
-                processMap(message, data)
+              if (message.msgtype === 1) {
+                processResponse(message);
+              } else if (message.msgtype === 9) {
+                processMap(message, data);
               }        
             }
-        }
+        };
 
         socket.onclose = function() {
             console.log('Socket Status: '+socket.readyState+' (Closed)');
-        }            
+        };          
     } catch(exception) {
         console.log('Error'+exception);
     }
@@ -88,7 +182,7 @@ function login(socket) {
         var msg = new CommsMessages.Message({"msgtype":5, "from":clientId, "dest":webServerId });
         msg.login = new CommsMessages.Login({"username":"sean", "password":"pass"});
 
-        sendMessage(msg)
+        sendMessage(msg);
         //var data = msg.encodeDelimited().toArrayBuffer();
         //socket.send(data);
 
@@ -121,27 +215,27 @@ function login(socket) {
       "rock_slope_w.png",   // 20
       "rock_slope_se.png",  // 21
       "rock_slope_sw.png",  // 22
-      "rock_slope_s.png",   // 23
-    ]
+      "rock_slope_s.png"   // 23
+    ];
 
 function processResponse(msg) {
-    if (msg.response.code == 1) {
-        clientId = msg.dest
-        console.log('Logged in, clientId = '+clientId)
+    if (msg.response.code === 1) {
+        clientId = msg.dest;
+        console.log('Logged in, clientId = '+clientId);
     }
 }
 function processMap(msg, data) {
-    console.log('Map message recevied')
-    var idx=0
+    console.log('Map message recevied');
+    var idx=0;
     for (var x=0; x<10; x++){
         for (var y=0; y<10; y++){
-            var colMin=data[idx++]
-            var colMax=data[idx++]
+            var colMin=data[idx++];
+            var colMax=data[idx++];
             for (var z=colMin; z<=colMax; z++){
-                var spr=sprites[data[idx++]]
+                var spr=sprites[data[idx++]];
                 var block = game.add.sprite(400+(x-y)*32,256+(x+y)*16-z*21, 'iso-outside');
                 //console.log('frameName: ' + x + ',' + y + '=' + mapsprites[y*10+x] + '=>' + sprites[mapsprites[y*10+x]])
-                block.frameName = spr
+                block.frameName = spr;
                 block.anchor.setTo(0.5, 0.5);
             }
         }
@@ -153,7 +247,7 @@ function say(text) {
         console.log('Say...');
         var msg = new CommsMessages.Message({"msgtype":6, "from":clientId, "dest":webServerId });
         msg.say = new CommsMessages.Say({"text":text});
-        sendMessage(msg)
+        sendMessage(msg);
         //var data = msg.encodeDelimited().toArrayBuffer();
         //socket.send(data);
     } catch(exception) {
@@ -166,7 +260,7 @@ function getMap(x,y) {
         console.log('GetMap...');
         var msg = new CommsMessages.Message({"msgtype":7, "from":clientId, "dest":webServerId });
         msg.mapRequest = new CommsMessages.MapRequest({"x":x, "y":y});
-        sendMessage(msg)
+        sendMessage(msg);
         //var data = msg.encodeDelimited().toArrayBuffer();
         //socket.send(data);
     } catch(exception) {
@@ -175,94 +269,4 @@ function getMap(x,y) {
 }
 
 //socket.close();
-
-
-function preload() {
-    try {
-      console.log('Loading textures')
-      //  We load a TexturePacker JSON file and image and show you how to make several unique sprites from the same file
-      game.load.atlas('iso-outside', 'resources/iso-64x64-outside.png', 'resources/iso-64x64-outside.json');
-
-      //game.load.image('block', 'resources/block.png');
-    } catch(exception) {
-      console.log('Error:' + exception);
-    }
 }
-
-var chick;
-var car;
-var mech;
-var robot;
-var cop;
-
-function create() {
-
-    connect();
-
-    // TODO - wait for open state, then send these
-    setTimeout(function () {
-      say("Hello World!");
-      getMap(1,1);
-    }, 20000);
-
-    game.stage.backgroundColor = '#404040';
-
-    var mapsprites = [
-      1,1,1,1,1,1,1,1,1,1,
-      1,1,1,1,1,2,1,1,1,1,
-      1,1,1,2,2,3,2,2,1,1,
-      1,1,1,2,3,3,3,2,2,1,
-      1,1,2,1,3,3,3,3,2,1,
-      1,1,1,2,3,1,3,2,2,1,
-      1,1,2,3,1,1,3,2,1,1,
-      1,1,2,2,2,2,3,1,1,1,
-      1,1,1,2,1,1,1,1,1,1,
-      1,1,1,1,1,1,1,1,1,1,
-    ];
-
-    var mapdata = [
-      1,1,1,1,1,1,1,1,1,1,
-      1,1,1,1,1,2,1,1,1,1,
-      1,1,1,2,2,3,2,2,1,1,
-      1,1,1,2,3,5,4,2,2,1,
-      1,1,2,2,5,6,5,3,2,1,
-      1,1,1,2,4,5,4,2,2,1,
-      1,1,2,3,3,4,5,2,1,1,
-      1,1,2,2,2,2,3,1,1,1,
-      1,1,1,2,1,1,1,1,1,1,
-      1,1,1,1,1,1,1,1,1,1,
-    ];
-
-//    for (var x=0; x<10; x++){
-//        for (var y=0; y<10; y++){
-//            for (var z=1; z<=mapdata[y*10+x]; z++){
-//                var block = game.add.sprite(400+(x-y)*32,128+(x+y)*16-z*21, 'iso-outside');
-//                //console.log('frameName: ' + x + ',' + y + '=' + mapsprites[y*10+x] + '=>' + sprites[mapsprites[y*10+x]])
-//                block.frameName = sprites[mapsprites[y*10+x]]
-//                block.anchor.setTo(0.5, 0.5);
-//            }
-//        }
-//    }
-    //chick = game.add.sprite(64, 64, 'atlas');
-
-    //  You can set the frame based on the frame name (which TexturePacker usually sets to be the filename of the image itself)
-    //chick.frameName = 'budbrain_chick.png';
-
-    //  Or by setting the frame index
-    //chick.frame = 0;
-
-    //cop = game.add.sprite(600, 64, 'atlas');
-    //cop.frameName = 'ladycop.png';
-
-    //robot = game.add.sprite(50, 300, 'atlas');
-    //robot.frameName = 'robot.png';
-
-    //car = game.add.sprite(100, 400, 'atlas');
-    //car.frameName = 'supercars_parsec.png';
-
-    //mech = game.add.sprite(250, 100, 'atlas');
-    //mech.frameName = 'titan_mech.png';
-
-}
-
-};
