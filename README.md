@@ -1,4 +1,4 @@
-ElixirMessagingServer
-=====================
+ElixirServers
+=============
 
 ** TODO: Add description **
