@@ -35,7 +35,7 @@ function create() {
 
     //  Modify the world and camera bounds
     // game.world.setBounds(-2000, -2000, 4000, 4000);
-    game.world.resize(3000, 600);
+    game.world.resize(2000, 2000);
     
     game.stage.backgroundColor = '#404040';
 
@@ -43,7 +43,7 @@ function create() {
     fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     
     //	Just to kick things off
-    button = game.add.button(100, 100, 'button', start, this, 2, 1, 0);
+    button = game.add.button(200, 100, 'button', start, this, 2, 1, 0);
 
     //	Progress report
     text = game.add.text(32, 128, 'Click to login', { fill: '#ffffff' });

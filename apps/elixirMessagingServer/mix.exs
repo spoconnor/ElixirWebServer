@@ -5,7 +5,10 @@ defmodule ElixirMessagingServer.Mixfile do
     [app: :elixirMessagingServer,
      version: "0.0.1",
      elixir: "~> 1.1.1",
+     build_path: "../../build",
+     deps: deps,
      deps_path: "../../deps",
+     config_path: "../../config/config.exs",
      lockfile: "../../mix.lock",
      escript: escript]  # Comment out to get iex prompt
   end
@@ -30,8 +33,11 @@ defmodule ElixirMessagingServer.Mixfile do
 
   defp deps do
     [
-      {:cowboy, github: "extend/cowboy", tag: "1.0.1" },
-      {:lager, github: "basho/lager", tag: "2.1.1" },
+      #{:anotherproject, in_umbrella: true},
+      {:cowboy, "~> 1.0.1" },
+      #{:lager, github: "basho/lager", tag: "2.1.1" },
+      {:goldrush, "== 0.1.6" },
+      {:lager, "~> 2.1.1" },
       {:jiffy, github: "davisp/jiffy", tag: "0.13.3" },
       {:ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.2.2" },
       #{:riak_pb, github: "basho/riak_pb", override: true, compile: "./rebar get-deps compile deps_dir=../"},
@@ -41,11 +47,15 @@ defmodule ElixirMessagingServer.Mixfile do
       {:eper, github: "massemanet/eper" , tag: "0.96.4" },
       {:mixer, github: "opscode/mixer", tag: "0.1.1" },
       {:sync, github: "rustyio/sync" }, # Note, in dev
-      {:exprotobuf, github: "bitwalker/exprotobuf", tag: "0.11.0"},
-      {:gpb, github: "tomas-abrahamsson/gpb", tag: "3.18.8", override: :true},
+      #{:exprotobuf, github: "bitwalker/exprotobuf", tag: "0.11.0"},
+      {:exprotobuf, "~> 0.11.0"},
+      #{:gpb, github: "tomas-abrahamsson/gpb", tag: "3.18.8", override: :true},
+      {:gpb, "~> 3.18.8"},
       #{:amqp, github: "pma/amqp", tag: "v0.0.6" },
-      {:poison, github: "devinus/poison", tag: "1.4.0"},
-      {:connection, github: "fishcakez/connection", tag: "v1.0.1"},
+      #{:poison, github: "devinus/poison", tag: "1.4.0"},
+      {:poison, "~> 1.4.0"},
+      #{:connection, github: "fishcakez/connection", tag: "v1.0.1"},
+      {:connection, "~> 1.0.1"},
     ]
   end
 end
