@@ -17,8 +17,8 @@ use GenServer
  def init(:ok) do
   IO.puts "Starting cowboy worker..."
 
-  port = Application.get_env(:ElixirMessagingServer, :http_port)
-  listenerCount = Application.get_env(:ElixirMessagingServer, :http_listener_count)
+  port = Application.get_env(:elixirMessagingServer, :http_port)
+  listenerCount = Application.get_env(:elixirMessagingServer, :http_listener_count)
   IO.puts("Listening on port #{port}")
 
   dispatch =
@@ -26,9 +26,9 @@ use GenServer
        {
          :_,
          [
-            {"/hello", :cowboy_static, {:priv_file, :ElixirMessagingServer, "static/hello.txt", [{:mimetypes, :cow_mimetypes, :all}]}},
-            {"/html5/CommsMessages.proto", :cowboy_static, {:priv_file, :ElixirMessagingServer, "html5/CommsMessages.proto", [{:mimetypes, {<<"text">>, <<"plain">>, []}}]}},
-            {"/html5/[...]", :cowboy_static, {:priv_dir, :ElixirMessagingServer, "html5", 
+            {"/hello", :cowboy_static, {:priv_file, :elixirMessagingServer, "static/hello.txt", [{:mimetypes, :cow_mimetypes, :all}]}},
+            {"/html5/CommsMessages.proto", :cowboy_static, {:priv_file, :elixirMessagingServer, "html5/CommsMessages.proto", [{:mimetypes, {<<"text">>, <<"plain">>, []}}]}},
+            {"/html5/[...]", :cowboy_static, {:priv_dir, :elixirMessagingServer, "html5", 
               [{:mimetypes, :cow_mimetypes, :web}]
             }},
             {"/events", WebserverEventsHandler, []},
@@ -36,7 +36,7 @@ use GenServer
             #{"/api", WebserverRestApiHandler, []},
             #{"/ws", :cowboy_static, {:file, "priv/ws_index.html"}},
             #{"/websocket", WebserverWebsocketHandler, []},
-            #{"/static/[...]", :cowboy_static, {:priv_dir, :ElixirMessagingServer, "static"}},
+            #{"/static/[...]", :cowboy_static, {:priv_dir, :elixirMessagingServer, "static"}},
             #{"/api/[:id]", [{:v1, :int}], WebserverToppageHandler, []},
             #{"/[...]", :cowboy_static, {:file, "html5/index.html"}},
          ]

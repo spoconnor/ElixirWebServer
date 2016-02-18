@@ -18,7 +18,7 @@ defmodule ElixirMessagingServer.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [applications: 
-      [:logger, :kernel, :stdlib, :lager, :ranch, :cowlib, :cowboy, :jiffy, :ssl, :ibrowse, :inets, :crypto ],
+      [:logger, :kernel, :stdlib, :lager, :cowlib, :cowboy, :jiffy, :ssl, :ibrowse, :inets, :crypto ],
       mod: {ElixirMessagingServer, []},
       env: [
         http_port: 8080,
