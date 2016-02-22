@@ -1,4 +1,4 @@
-defmodule HelloServer do
+defmodule World.Hello do
 use GenServer
 
 defmodule State do
@@ -47,7 +47,7 @@ end
 
 # Called in response to GenServer.start_link/4. Initialize state
 def init(:ok) do
-  IO.puts("HelloServer initializing")
+  IO.puts("World.Hello initializing")
   {:ok, %State{count: 0}}
 end
 
@@ -58,13 +58,13 @@ end
 
 # deal with Stop request
 def handle_cast(:stop, state) do
-  IO.puts("HelloServer stopping")
+  IO.puts("World.Hello stopping")
   {:stop, :normal, state }
 end
 
 # async call, with no reply
 def handle_cast(:say_hello, state) do
-  IO.puts("Hello")
+  IO.puts("World.Hello Hello")
   {:noreply, %State{count: state.count+1} }
 end
 
@@ -76,7 +76,7 @@ end
 
 # invoked by GenServer
 def terminate(_reason, _state) do
-  IO.puts("HelloServer terminating")
+  IO.puts("World.Hello terminating")
   :ok
 end
 

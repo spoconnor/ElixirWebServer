@@ -1,4 +1,4 @@
-defmodule World do
+defmodule World.App do
   use Application
 
   def start(_type, _args) do

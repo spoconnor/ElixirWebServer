@@ -1,4 +1,4 @@
-defmodule WorldServer do
+defmodule World.Server do
 use GenServer
 
 #-------------------------------------------------------------------

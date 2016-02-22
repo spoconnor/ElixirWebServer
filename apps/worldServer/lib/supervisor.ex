@@ -5,12 +5,9 @@ defmodule World.Supervisor do
     Supervisor.start_link(__MODULE__, :ok)
   end
 
-  @hello_server_name WORLD.HelloServer
-  @world_server_name WORLD.WORLDServer
-
 
 # Example usage
-#  iex(1)> HelloServer.say_hello(WORLD.HelloServer)
+#  iex(1)> HelloServer.say_hello(World.HelloServer)
 #  Hello
 #  :ok
 
@@ -18,8 +15,9 @@ defmodule World.Supervisor do
   def init(:ok) do
 
     children = [
-      worker(HelloServer, [[name: @hello_server_name]]),
-      worker(WorldServer, [[name: @world_server_name]])
+      worker(World.Hello, [[name: World.HelloServer]]),
+      worker(World.Server, [[name: World.Server]]),
+      worker(World.Map, [[name: World.Map]])
     ]
 
     supervise(children, strategy: :one_for_one)
