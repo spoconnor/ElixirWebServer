@@ -46,7 +46,7 @@ end
 
 # Called in response to GenServer.start_link/4. Initialize state
 def init(:ok) do
-  loadmap("priv/map.bmp")
+  #loadmap("priv/map.bmp")
   { :ok, HashDict.new() }
 end
 

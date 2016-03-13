@@ -1,4 +1,4 @@
-defmodule MapServer do
+defmodule World.Map do
 use GenServer
 
 defmodule State do
@@ -32,15 +32,34 @@ def stop(server) do
   GenServer.cast(server, :stop)
 end
 
+#-------------------------------------------------------------------
+
 # Call fn, don't expect a response
 def say_hello(server) do
   GenServer.cast(server, :say_hello)
 end
 
-# Call, but do want a response
-def get_count(server) do
-  GenServer.call(server, :get_count)
+def register(server, coord) do
+  GenServer.cast(server, :register, coord)
 end
+
+def deregister(server, coord) do
+  GenServer.cast(server, :deregister, coord)
+end
+
+def get_map(server, coord) do
+  GenServer.call(server, :get_map, coord)
+end
+
+def set_block(server, coord, block) do
+  GenServer.call(server, :set_block, coord, block)
+end
+
+def get_block(server, coord) do
+  GenServer.call(server, :get_block, coord)
+end
+
+
 
 #-------------------------------------------------------------------
 # GenServer Function Definitions
@@ -48,24 +67,14 @@ end
 # Called in response to GenServer.start_link/4. Initialize state
 def init(:ok) do
   IO.puts("MapServer initializing")
-  {:ok, %State{count: 0}}
-end
-
-# synchronously response with count, and update state
-def handle_call(:get_count, _from, %State{count: count}) do 
-  {:reply, count, %State{count: count+1} }
+  {:ok,chunks_pid}=MapServer.start_link
+  {:ok, chunks_pid}
 end
 
 # deal with Stop request
 def handle_cast(:stop, state) do
   IO.puts("MapServer stopping")
   {:stop, :normal, state }
-end
-
-# async call, with no reply
-def handle_cast(:say_hello, state) do
-  IO.puts("Hello")
-  {:noreply, %State{count: state.count+1} }
 end
 
 # out-of-band msgs
@@ -87,4 +96,39 @@ end
 
 #------------------------------------------------------------------
 
+# async call, with no reply
+def handle_cast(:say_hello, state) do
+  IO.puts("Hello")
+  {:noreply, state }
+end
+
+def handle_cast({:register, coord}, state) do
+  IO.puts("register")
+  {:noreply, state }
+end
+
+def handle_cast({:deregister, coord}, state) do
+  IO.puts("deregister")
+  {:noreply, state }
+end
+
+def handle_call({:get_map, coord}, from, state) do
+  IO.puts("get_map")
+  map = Chunks.get(state, coord)
+  {:reply, map, state }
+end
+
+def handle_call({:set_block, coord, block}, from, state) do
+  IO.puts("set_block")
+  Chunks.set(state, coord, block)
+  {:reply, :ok, state }
+end
+
+def handle_call({:get_block, coord}, from, state) do
+  IO.puts("get_block")
+  block = Chunks.get(state, coord)
+  {:reply, block, state }
+end
+
+#------------------------------------------------------------------
 end

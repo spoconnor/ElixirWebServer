@@ -14,10 +14,10 @@ end
 
 #-------------------------------------------------------------------
 
-def init([x,y]) do
-  IO.puts("Chunks initializing with size #{x},#{y}")
+def init(size) do
+  IO.puts("Chunks initializing with size #{size}")
   chunks = HashDict.new
-  {:ok, %{xsize: x, ysize: y, chunks: chunks} }
+  {:ok, %{size: size, chunks: chunks} }
 end
 
 def terminate(_reason, _state) do
@@ -36,7 +36,7 @@ end
 #-------------------------------------------------------------------
 
 defp index(state, x,y) do
-  y * state.xsize + x
+  y * state.size + x
 end
 
 defp create_chunk() do
