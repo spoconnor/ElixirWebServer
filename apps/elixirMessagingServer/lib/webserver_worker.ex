@@ -27,12 +27,12 @@ use GenServer
          :_,
          [
             {"/hello", :cowboy_static, {:priv_file, :elixirMessagingServer, "static/hello.txt", [{:mimetypes, :cow_mimetypes, :all}]}},
-            {"/html5/CommsMessages.proto", :cowboy_static, {:priv_file, :elixirMessagingServer, "html5/CommsMessages.proto", [{:mimetypes, {<<"text">>, <<"plain">>, []}}]}},
-            {"/html5/[...]", :cowboy_static, {:priv_dir, :elixirMessagingServer, "html5", 
+            #{"/html5/CommsMessages.proto", :cowboy_static, {:priv_file, :elixirMessagingServer, "html5/CommsMessages.proto", [{:mimetypes, {<<"text">>, <<"plain">>, []}}]}},
+            {"/[...]", :cowboy_static, {:priv_dir, :elixirMessagingServer, "",
               [{:mimetypes, :cow_mimetypes, :web}]
             }},
-            {"/events", WebserverEventsHandler, []},
-            {"/foobar", WebserverFoobarHandler, []},
+            #{"/events", WebserverEventsHandler, []},
+            #{"/foobar", WebserverFoobarHandler, []},
             #{"/api", WebserverRestApiHandler, []},
             #{"/ws", :cowboy_static, {:file, "priv/ws_index.html"}},
             #{"/websocket", WebserverWebsocketHandler, []},

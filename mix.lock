@@ -19,4 +19,4 @@
   "ranch": {:hex, :ranch, "1.2.1"},
   "riak_pb": {:git, "https://github.com/basho/riak_pb.git", "eacf4404625de69f7b3908cebd8efe416d9598b0", [tag: "2.1.0.7"]},
   "riakc": {:git, "https://github.com/basho/riak-erlang-client.git", "1c75e31fd50e065aeebe787d608ce9b7ddeddb38", [tag: "2.1.1"]},
-  "sync": {:git, "https://github.com/rustyio/sync.git", "de3c42df5845719d3a3529b76a01f9729821fe7a", []}}
+  "sync": {:git, "https://github.com/rustyio/sync.git", "11df81d196eaab2d84caa3fbe8def5d476ef79d8", []}}
