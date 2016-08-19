@@ -2,7 +2,7 @@ defmodule ElixirMessagingServer.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :elixirMessagingServer,
+    [app: :elixirmessagingserver,
      version: "0.0.1",
      elixir: "~> 1.1.1",
      build_path: "../../build",

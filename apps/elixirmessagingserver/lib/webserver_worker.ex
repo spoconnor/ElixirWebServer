@@ -17,8 +17,8 @@ use GenServer
  def init(:ok) do
   IO.puts "Starting cowboy worker..."
 
-  port = Application.get_env(:elixirMessagingServer, :http_port)
-  listenerCount = Application.get_env(:elixirMessagingServer, :http_listener_count)
+  port = Application.get_env(:elixirmessagingserver, :http_port)
+  listenerCount = Application.get_env(:elixirmessagingserver, :http_listener_count)
   IO.puts("Listening on port #{port}")
 
   dispatch =
@@ -26,17 +26,19 @@ use GenServer
        {
          :_,
          [
-            {"/hello", :cowboy_static, {:priv_file, :elixirMessagingServer, "static/hello.txt", [{:mimetypes, :cow_mimetypes, :all}]}},
-            #{"/html5/CommsMessages.proto", :cowboy_static, {:priv_file, :elixirMessagingServer, "html5/CommsMessages.proto", [{:mimetypes, {<<"text">>, <<"plain">>, []}}]}},
-            {"/[...]", :cowboy_static, {:priv_dir, :elixirMessagingServer, "",
+            {"/hello", :cowboy_static, {:priv_file, :elixirmessagingserver, "static/hello.txt", [{:mimetypes, :cow_mimetypes, :all}]}},
+            {"/src/CommsMessages.proto", :cowboy_static, {:priv_file, :elixirmessagingserver, "html5/CommsMessages.proto", [{:mimetypes, {<<"text">>, <<"plain">>, []}}]}},
+
+            {"/[...]", :cowboy_static, {:priv_dir, :elixirmessagingserver, "",
               [{:mimetypes, :cow_mimetypes, :web}]
             }},
+
             #{"/events", WebserverEventsHandler, []},
             #{"/foobar", WebserverFoobarHandler, []},
             #{"/api", WebserverRestApiHandler, []},
             #{"/ws", :cowboy_static, {:file, "priv/ws_index.html"}},
-            #{"/websocket", WebserverWebsocketHandler, []},
-            #{"/static/[...]", :cowboy_static, {:priv_dir, :elixirMessagingServer, "static"}},
+            {"/websocket", WebserverWebsocketHandler, []},
+            #{"/static/[...]", :cowboy_static, {:priv_dir, :elixirmessagingserver, "static"}},
             #{"/api/[:id]", [{:v1, :int}], WebserverToppageHandler, []},
             #{"/[...]", :cowboy_static, {:file, "html5/index.html"}},
          ]
